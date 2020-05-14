@@ -1,0 +1,47 @@
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+/*
+// Definition for Employee.
+class Employee {
+public:
+    int id;
+    int importance;
+    vector<int> subordinates;
+};
+*/
+
+class Solution {
+public:
+    int getImportance(vector<Employee*> employees, int id) {
+        int sum=0;
+        if(employees.size() == 0)
+            return 0;
+        unordered_map<int, Employee*> emap;
+        set<int> eset;
+        queue<int> q;
+        
+        for(auto i: employees)
+            emap[i->id] = i;
+        q.push(id);
+        while(q.size() != 0)
+        {
+            int a = q.front();
+            q.pop();
+            if(eset.find(a) == eset.end())
+            {
+                sum += emap[a]->importance;
+                eset.insert(a);
+                for(auto sub : emap[a]->subordinates)
+                {
+                    q.push(sub);
+                }
+            }
+        }
+        
+        return sum;
+    }
+};
