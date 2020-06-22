@@ -1,0 +1,36 @@
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+class StockSpanner {
+public:
+    stack<int> prices, tem;
+    StockSpanner() {
+        
+    }
+    
+    int next(int price) {
+        int n= tem.size();
+        int count=1;
+        if(prices.size() > 0)
+        {
+            while((prices.size() > 0)&&prices.top() <= price)
+            {
+                count += tem.top();
+                tem.pop();
+                prices.pop();
+            }
+        }
+        prices.push(price);
+        tem.push(count);
+        return count;
+    }
+};
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner* obj = new StockSpanner();
+ * int param_1 = obj->next(price);
+ */
