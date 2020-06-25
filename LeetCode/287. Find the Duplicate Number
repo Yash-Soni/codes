@@ -1,0 +1,22 @@
+int findDuplicate(vector<int>& nums) {
+        int hare=0, tortoise = 0,n;
+        n = nums.size();
+        tortoise = nums[tortoise];
+        hare = nums[nums[hare]];
+        //phase first
+        while(tortoise != hare)
+        {
+            tortoise = nums[tortoise];
+            hare = nums[nums[hare]];
+        }
+        //phase second
+        int dup;
+        tortoise = 0;
+        while(hare != tortoise)
+        {
+            tortoise = nums[tortoise];
+            hare = nums[hare];
+        }
+        dup = hare;
+        return dup;
+    }
