@@ -1,0 +1,39 @@
+//done using priority queue
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+class Solution {
+public:
+    struct compare{
+        bool operator()(pair<int,int> const& i1, pair<int,int> const& i2)
+        {
+            return i1.second < i2.second;
+        }
+    };
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        priority_queue<pair<int,int>, vector<pair<int,int>>, compare> pq;
+        map<int, int> m;
+        vector<int> vec;
+        int n = nums.size();
+        for(int i=0; i<n; i++)
+        {
+            m[nums[i]]++;
+        }
+        for(auto it = m.begin(); it != m.end(); it++)
+        {
+            // pair<int, int> p = make_pair(it.first, it.second);
+            pq.push(make_pair(it->first, it->second));
+        }
+        int i=0;
+        while(i<k)
+        {
+            vec.push_back(pq.top().first);
+            pq.pop();
+            i++;
+        }
+        return vec;
+    }
+};
