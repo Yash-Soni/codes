@@ -1,0 +1,38 @@
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+class Solution {
+public:
+    struct custcomp{
+        bool operator()(pair<pair<int, int>, double> const &a, pair<pair<int, int>, double> const &b)
+        {
+            // cout<<"\na.second "<<a.second<<" b.second "<<b.second;
+            return a.second > b.second;
+        }
+    };
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        priority_queue<pair<pair<int, int>, double> , vector<pair<pair<int, int>, double>>, custcomp> pq;
+        int n = points.size();
+        double dis;
+        vector<vector<int>> vec;
+        for(int i=0; i<n; i++)
+        {
+            dis = (double)sqrt(points[i][0]*points[i][0] + points[i][1]*points[i][1]);
+            // cout<<"\ndis = "<<dis;
+            pq.push(make_pair(make_pair(points[i][0], points[i][1]), dis));
+        }
+        for(int i=0; i<K; i++)
+        {
+            vector<int> tem;
+            tem.push_back(pq.top().first.first);
+            tem.push_back(pq.top().first.second);
+            pq.pop();
+            vec.push_back(tem);
+        }
+        return vec;
+    }
+};
