@@ -1,0 +1,47 @@
+bool ispossible(int num, int students, vector<int> &A)
+{
+    long int stu = 1, pages=0;
+    for(int i=0; i<A.size(); i++)
+    {
+        pages += A[i];
+        if(pages > num)
+        {
+            pages = 0;
+            i--;
+            if(stu == students)
+                return false;
+            stu++;
+        }
+    }
+    return true;
+}
+
+int Solution::books(vector<int> &A, int B) {
+    int n = A.size();
+    long int start = *max_element(A.begin(), A.end());
+    if(n == B)
+    {
+        return start;
+    }
+    if(B > n)
+        return -1;
+    long int end = 0, mid, ans;
+    for(int i=0; i<n; i++)
+    {
+        end += A[i];
+    }
+    // cout<<"\nstart "<<start<<" end "<<end<<"\n";
+    while(start <= end)
+    {
+        mid = (start + end)/2;
+        // cout<<"\nstart "<<start<<" mid "<<mid<<" end "<<end<<" ans "<<ans<<"\n";
+        if(ispossible(mid, B, A))
+        {
+            end = mid-1;
+            ans = mid;
+        }
+        else
+            start = mid + 1;
+    }
+    return ans;
+}
