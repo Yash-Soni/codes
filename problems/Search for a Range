@@ -1,0 +1,76 @@
+vector<int> Solution::searchRange(const vector<int> &A, int B) {
+    int n = A.size();
+    int start =0, end = n-1, mid;
+    int flag = 0, n1;
+    vector<int> vec(2, -1);
+    if(n == 1)
+    {
+        if(A[0] == B)
+        {
+            vec[0] = 0;
+            vec[1] = 0;
+        }
+        return vec;
+    }
+    while(start <= end)
+    {
+        mid = (start + end)/2;
+        if(A[mid] == B)
+        {
+            n1 = mid;
+            flag = 1;
+            if(n1 > 0 && A[n1-1] != B)
+            {   
+                vec[0] = n1;
+                break;
+            }
+            else if(n1 == 0)
+            {
+                vec[0] = 0;
+                break;
+            }
+            else if(A[n1 - 1] == A[mid])
+                end = mid - 1;
+        }
+        else if(A[mid] < B)
+            start = mid +1;
+        else
+            end = mid-1;
+    }
+    if(flag == 0)
+        return vec;
+    
+    start = n1;
+    end = n-1;
+    
+    if(A[end] == B)
+        vec[1] = end;
+    while(start <= end)
+    {
+        mid = (start + end)/2;
+        if(A[mid] == B)
+        {
+            n1 = mid;
+            // cout<<"\nstart is "<<start<<" end is "<<end<<" has "<<A[end]<<"\n";
+            if(n1 < n-1 && A[n1+1] != B)
+            {   
+                // cout<<" mid has "<<A[mid];
+                vec[1] = n1;
+                break;
+            }
+            else if(n1 == n-1)
+            {
+                vec[1] = n-1;
+                break;
+            }
+            else if(A[n1 + 1] == B)
+                start = mid + 1;
+        }
+        else if(A[mid] < B)
+            start = mid +1;
+        else
+            end = mid-1;
+    }
+    
+    return vec;
+}
