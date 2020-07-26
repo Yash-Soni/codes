@@ -1,0 +1,40 @@
+void find(const vector<int> &A, vector<int> &count, int n, int nsqrt)
+{
+    // vector<int> count((n/nsqrt)+1, 0);
+    for(int i=0; i<n; i++)
+    {
+        count[(A[i]-1)/nsqrt]++;
+    }
+}
+
+int Solution::repeatedNumber(const vector<int> &A) {
+    int n=A.size();
+    int flag = 0, num, count=0, nsqrt;
+    nsqrt = sqrt(n);
+    int range = n/nsqrt;
+    unordered_map<int, int> mp;
+    vector<int> blocks(range+1, 0);
+    find(A, blocks, n, nsqrt);
+    int selected_block;
+    for(int i=0; i<=range; i++)
+    {
+        if(blocks[i] > nsqrt)
+        {
+            selected_block = i;
+            break;
+        }
+    }
+    for(int i=0; i<n; i++)
+    {
+        if(((selected_block*nsqrt) < A[i]) && (A[i] <= (selected_block+1)*nsqrt))
+        {
+            mp[A[i]]++;
+            if(mp[A[i]] > 1)
+            {
+                return A[i];
+            }
+        }
+    }
+    return -1;
+    // return -1;
+}
