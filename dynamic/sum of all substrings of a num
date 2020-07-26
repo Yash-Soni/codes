@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  int t;
+  cin>>t;
+  while(t--)
+  {
+    string s;
+    cin>>s;
+    cout<<sumSubstrings(s)<<"\n";
+  }
+}
+
+int toDigit(char c)
+{
+    return (c-'0');
+}
+long long sumSubstrings(string s){
+    
+    // your code here
+    long long num=0, num1, n;
+    long long sum = 0;
+    n = s.length();
+    num = pow(2,n);
+    vector<long long> vec;
+    vec.push_back(s[0] - 48);
+    for(int i=1; i<n; i++)
+    {
+        num1 = toDigit(s[i]);
+        // cout<<vec[i-1]<<" ";
+        num = ((i+1)*num1 + (vec[i-1]*10))%1000000007;
+        vec.push_back(num);
+    }
+    for(int i=0; i<vec.size(); i++)
+        sum = (sum + vec[i])%1000000007;
+    return sum;
+}
