@@ -52,3 +52,59 @@ int main()
 	}
 	return 0;
 }
+
+---------------------------------------------------------------------------------
+	
+	Leetcode solution:
+
+class Solution {
+public:
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n = board.size();
+        queue<int> q;
+        vector<bool> visited(n*n+1, false);
+        int row, col, num, moves=0, minmoves = n*n;
+        q.push(1);
+        while(q.size() != 0)
+        {
+            int count = q.size();
+            for(int i=0; i<count; i++)
+            {
+                num = q.front();
+                q.pop();
+                
+                if(num == n*n)
+                {
+                    minmoves = min(minmoves, moves);
+                    return minmoves;
+                }
+                
+                for(int k=1; k<=6; k++)
+                {
+                    int next_step = num+k;
+                    if(next_step > n*n)
+                    {
+                        break;
+                    }
+                    // cout<<next_step<<" ";
+                    if(visited[next_step] == false)
+                    {    
+                        visited[next_step] = true;
+                        row = n - (next_step-1)/n - 1;
+                        col = (n-row)%2 == 0 ? n - (next_step-1)%n - 1 : (next_step-1)%n;
+                        // cout<<board[row][col]<<" , row "<<row<<" col "<<col<<"\n";
+                        if(board[row][col] == -1)
+                            q.push(next_step);
+                        else
+                        {
+                            q.push(board[row][col]);
+                        }
+                    }
+                }
+            }
+            moves++;
+        }
+        return minmoves == n*n ? -1 : minmoves;
+    }
+};
+
