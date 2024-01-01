@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> result;
+        vector<int> row(1,1);
+        result.push_back(row);
+        if(numRows == 1) return result;
+        // row.push_back(1);
+        // result.push_back(row);
+        // if(numRows == 2) return result;
+
+        for(int i=2; i<numRows; i++) {
+            vector<int> rowItems(1,1);
+            vector<int> prevRow = result.back();
+            for(int j=1; j<prevRow.size(); j++) {
+                rowItems.push_back(prevRow[j-1] + prevRow[j]);
+            }
+            rowItems.push_back(1);
+            result.push_back(rowItems);
+        }
+        return result;
+    }
+};
